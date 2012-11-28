@@ -4,7 +4,7 @@ require_once '../library/commonMethods.php';
 // how many rows to show per page
 $rowsPerPage = 5;
 $queryString = '';
-$sql = "SELECT ItemID, Name, Thumbnail
+$sql = "SELECT ItemID, Name, ImageURL
         FROM Items ORDER BY Name";
 $result     = query(getPagingQuery($sql, $rowsPerPage));
 $pagingLink = getPagingLink($sql, $rowsPerPage, $queryString);
@@ -28,13 +28,7 @@ if (mysql_num_rows($result) > 0) {
 	while($row = mysql_fetch_assoc($result)) {
 		extract($row);
 		
-		if ($Thumbnail) {
-			$Thumbnail = '../images/product' . Thumbnail;
-		} else {
-			$Thumbnail = '../images/No-Image-Thumbnail.png';
-		}	
-		
-		
+		$Thumbnail = $ImageURL;
 		
 		if ($i%2) {
 			$class = 'row1';
@@ -46,7 +40,7 @@ if (mysql_num_rows($result) > 0) {
 ?>
   <tr class="<?php echo $class; ?>"> 
    <td><a href="productIndex.php?view=detail&productId=<?php echo $ItemID; ?>"><?php echo $Name; ?></a></td>
-   <td width="75" align="center"><img src="<?php echo $Thumbnail; ?>"></td>
+   <td width="75" align="center"><img src="<?php echo $Thumbnail; ?>" height = "50" width = "50"></td>
    <td width="70" align="center"><a href="javascript:modifyProduct(<?php echo $ItemID; ?>);">Modify</a></td>
    <td width="70" align="center"><a href="javascript:deleteProduct(<?php echo $ItemID; ?>);">Delete</a></td>
   </tr>

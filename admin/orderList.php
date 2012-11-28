@@ -16,7 +16,7 @@ if (isset($_GET['status']) && $_GET['status'] != '') {
 $rowsPerPage = 10;
 
 $sql = "SELECT o.OrderID, OrderDate, Status,
-               SUM(Price * oi.Quantity) + ShippingCost AS od_amount
+               SUM(Price * oi.Quantity) + ShippingCost AS Amount
 	    FROM Orders o, OrderItems oi, Items i 
 		WHERE oi.ItemID = i.ItemID and o.OrderID = oi.OrderID $sql2
 		GROUP BY OrderID
@@ -73,7 +73,7 @@ if (mysql_num_rows($result) > 0) {
   <tr class="<?php echo $class; ?>"> 
    <td width="60"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?view=detail&oid=<?php echo $OrderID; ?>"><?php echo $OrderID; ?></a></td>
    <td><?php echo $name ?></td>
-   <td width="60" align="right"><?php echo displayAmount($od_amount); ?></td>
+   <td width="60" align="right"><?php echo "$" . $Amount; ?></td>
    <td width="150" align="center"><?php echo $OrderDate; ?></td>
    <td width="70" align="center"><?php echo $Status; ?></td>
   </tr>

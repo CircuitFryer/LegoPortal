@@ -1,6 +1,6 @@
 <?php
 
-require_once '../commonDBMethods.php';
+require_once '../library/commonMethods.php';
 // make sure a product id exists
 if (isset($_GET['productId']) && $_GET['productId'] > 0) {
 	$productId = $_GET['productId'];
@@ -10,7 +10,7 @@ if (isset($_GET['productId']) && $_GET['productId'] > 0) {
 }
 
 // get product info
-$sql = "SELECT Name, Description, Price, Quantity, ImageLarge, Thumbnail, ColorID
+$sql = "SELECT *
         FROM Items
 		WHERE ItemID = $productId";
 $result = mysql_query($sql) or die('Cannot get product. ' . mysql_error());
@@ -46,26 +46,30 @@ extract($row2);
    <td width="150" class="label">Price</td>
    <td class="content"><input name="txtPrice" type="text" class="box" id="txtPrice" value="<?php echo $Price; ?>" size="10" maxlength="7"> </td>
   </tr>
+ <tr> 
+   <td width="150" class="label">Width (studs)</td>
+   <td class="content"><input name="txtWidth" type="text" id="txtWidth" value="<?php echo $Width; ?>" size="10" maxlength="2" class="box" onKeyUp="checkNumber(this);"> </td>
+  </tr>
+ <tr> 
+   <td width="150" class="label">Length (studs)</td>
+   <td class="content"><input name="txtLength" type="text" id="txtLength" value="<?php echo $Length; ?>" size="10" maxlength="2" class="box" onKeyUp="checkNumber(this);"> </td>
+  </tr>
+ <tr> 
+   <td width="150" class="label">Height</td>
+   <td class="content"><input name="txtHeight" type="text" id="txtHeight" value="<?php echo $Height; ?>" size="10" maxlength="5" class="box" onKeyUp="checkNumber(this);"> </td>
+  </tr>
+  <tr> 
+   <td width="150" class="label">Weight(oz)</td>
+   <td class="content"><input name="txtWeight" type="text" id="txtWeight" value="<?php echo $Weight; ?>"size="10" maxlength="4" class="box" onKeyUp="checkNumber(this);"> </td>
+  </tr>
+
   <tr> 
    <td width="150" class="label">Quantity In Stock</td>
    <td class="content"><input name="txtQty" type="text" class="box" id="txtQty" value="<?php echo $Quantity;  ?>" size="10" maxlength="10"> </td>
   </tr>
   <tr> 
-<?php
-	 $thisMax = ini_get('upload_max_filesize');
-echo $thisMax; ?>
    <td width="150" class="label">Image</td>
-   <td class="content"> <input name="fileImage" type="file" id="fileImage" class="box">
-<?php
-	if ($Thumbnail != '') {
-?>
-    <br>
-    <img src="<?php echo $Thumbnail; ?>"> &nbsp;&nbsp;<a href="javascript:deleteImage(<?php echo $productId; ?>);">Delete 
-    Image</a> 
-    <?php
-	}
-?>    
-    </td>
+   <td class="content"> <input name="txtImage" type="text" id="txtImage" class="box" value="<?php echo $ImageURL; ?>" size="75"></td>
   </tr>
  </table>
  <p align="center"> 

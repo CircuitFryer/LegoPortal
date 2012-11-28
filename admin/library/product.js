@@ -2,11 +2,7 @@
 function viewProduct()
 {
 	with (window.document.frmListProduct) {
-		//if (cboCategory.selectedIndex == 0) {
-		//	window.location.href = 'productIndex.php';
-		//} else {
-			window.location.href = 'productIndex.php';//?catId=' + cboCategory.options[cboCategory.selectedIndex].value;
-		//}
+		window.location.href = 'productIndex.php';
 	}
 }
 

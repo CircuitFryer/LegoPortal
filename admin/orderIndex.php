@@ -20,7 +20,7 @@ switch ($view) {
 
 	case 'modify' :
 		modifyStatus();
-		//$content 	= 'modify.php';		
+		//$content 	= 'orderModify.php';		
 		//$pageTitle 	= 'Shop Admin Control Panel - Modify Orders';
 		break;
 

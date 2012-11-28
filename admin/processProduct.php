@@ -35,16 +35,16 @@ function addProduct()
     	$name        = $_POST['txtName'];
 	$description = $_POST['mtxDescription'];
 	$price       = str_replace(',', '', (double)$_POST['txtPrice']);
+	$width		= str_replace(',','', (double)$_POST['txtWidth']);
+	$length	= str_replace(',','', (double)$_POST['txtLength']);
+	$height	= str_replace(',','', (double)$_POST['txtHeight']);
 	$weight       = str_replace(',', '', (double)$_POST['txtWeight']);
 	$qty         = (int)$_POST['txtQty'];
 	$colorID     = $_POST['cboColor'];
-	$images = uploadProductImage('fileImage', '../images/product');
-
-	$mainImage = $images['image'];
-	$thumbnail = $images['thumbnail'];
+	$image = 	$_POST['txtImage'];
 	
-	$sql   = "INSERT INTO Items (Name, Description, Weight, Price, Quantity, ImageLarge, Thumbnail, ColorID)
-	          VALUES ('$name', '$description', $weight, $price, $qty, '$mainImage', '$thumbnail', '$colorID')";
+	$sql   = "INSERT INTO Items (Name, Description, Width, Length, Height, Weight, Price, Quantity, ImageURL, ColorID)
+	          VALUES ('$name', '$description', $width, $length, $height, $weight, $price, $qty, '$image', '$colorID')";
 
 	$result = query($sql);
 	
@@ -52,8 +52,8 @@ function addProduct()
 }
 
 /*
-	Upload an image and return the uploaded image name 
-*/
+	Probably dead code after today
+
 function uploadProductImage($inputName, $uploadDir)
 {
 	$image     = $_FILES[$inputName];
@@ -101,7 +101,7 @@ function uploadProductImage($inputName, $uploadDir)
 	
 	return array('image' => $imagePath, 'thumbnail' => $thumbnailPath);
 }
-
+*/
 /*
 	Modify a product
 */
@@ -110,32 +110,18 @@ function modifyProduct()
 	$productId   = (int)$_GET['productId'];	
    	$name        = $_POST['txtName'];
 	$description = $_POST['mtxDescription'];
-	$price       = str_replace(',', '', $_POST['txtPrice']);
+	$price       = str_replace(',', '', (double)$_POST['txtPrice']);
+	$width		= str_replace(',','', (double)$_POST['txtWidth']);
+	$length	= str_replace(',','', (double)$_POST['txtLength']);
+	$height	= str_replace(',','', (double)$_POST['txtHeight']);
+	$weight       = str_replace(',', '', (double)$_POST['txtWeight']);
 	$qty         = $_POST['txtQty'];
 	
-	$images = uploadProductImage('fileImage', '../images/product/');
-
-	$mainImage = $images['image'];
-	$thumbnail = $images['thumbnail'];
-
-	// if uploading a new image
-	// remove old image
-	if ($mainImage != '') {
-		_deleteImage($productId);
+	$imageURL = $_POST['txtImage'];
 		
-		$mainImage = "'$mainImage'";
-		$thumbnail = "'$thumbnail'";
-	} else {
-		// if we're not updating the image
-		// make sure the old path remain the same
-		// in the database
-		$mainImage = 'ImageLarge';
-		$thumbnail = 'Thumbnail';
-	}
-			
 	$sql   = "UPDATE Items
-	          SET Name = '$name', Description = '$description', Price = $price, 
-			      Quantity = $qty, ImageLarge = $mainImage, Thumbnail = $thumbnail
+	          SET Name = '$name', Description = '$description', Price = $price, Width = $width,
+		   Length = $length, Height = $height, Weight = $weight, Quantity = $qty, ImageURL = '$imageURL'
 			  WHERE ItemID = $productId";  
 
 	$result = query($sql);
@@ -188,8 +174,8 @@ function deleteProduct()
 
 
 /*
-	Remove a product image
-*/
+	More dead code for the CIR, useless after todays discussion 11/27
+
 function deleteImage()
 {
 	if (isset($_GET['productId']) && (int)$_GET['productId'] > 0) {
@@ -234,7 +220,7 @@ function _deleteImage($productId)
 	return $deleted;
 }
 
-
+*/
 
 
 ?>

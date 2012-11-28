@@ -16,10 +16,5 @@ function modifyOrderStatus(orderId)
 {
 	statusList = window.document.frmOrder.cboOrderStatus;
 	status     = statusList.options[statusList.selectedIndex].value;
-	window.location.href = 'processOrder.php?action=modify&oid=' + orderId + '&status=' + status;
-}
-
-function deleteOrder(orderId)
-{
-
+	window.location.href = 'processOrder.php?action=ship&oid=' + orderId + '&status=' + status;
 }

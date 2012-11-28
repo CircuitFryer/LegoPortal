@@ -27,17 +27,29 @@ $colorList = buildOptions();
    <td width="150" class="label">Price</td>
    <td class="content"><input name="txtPrice" type="text" id="txtPrice" size="10" maxlength="7" class="box" onKeyUp="checkNumber(this);"> </td>
   </tr>
+ <tr> 
+   <td width="150" class="label">Width (studs)</td>
+   <td class="content"><input name="txtWidth" type="text" id="txtWidth" size="10" maxlength="2" class="box" onKeyUp="checkNumber(this);"> </td>
+  </tr>
+ <tr> 
+   <td width="150" class="label">Length (studs)</td>
+   <td class="content"><input name="txtLength" type="text" id="txtLength" size="10" maxlength="2" class="box" onKeyUp="checkNumber(this);"> </td>
+  </tr>
+ <tr> 
+   <td width="150" class="label">Height</td>
+   <td class="content"><input name="txtHeight" type="text" id="txtHeight" size="10" maxlength="5" class="box" onKeyUp="checkNumber(this);"> </td>
+  </tr>
   <tr> 
    <td width="150" class="label">Weight(oz)</td>
-   <td class="content"><input name="txtWeight" type="text" id="txtPrice" size="10" maxlength="4" class="box" onKeyUp="checkNumber(this);"> </td>
+   <td class="content"><input name="txtWeight" type="text" id="txtWeight" size="10" maxlength="4" class="box" onKeyUp="checkNumber(this);"> </td>
   </tr>
   <tr> 
    <td width="150" class="label">Quantity In Stock</td>
    <td class="content"><input name="txtQty" type="text" id="txtQty" size="10" maxlength="10" class="box" onKeyUp="checkNumber(this);"> </td>
   </tr>
   <tr> 
-   <td width="150" class="label">Image</td>
-   <td class="content"> <input name="fileImage" type="file" id="fileImage" class="box"> 
+   <td width="150" class="label">Image URL</td>
+   <td class="content"> <input name="txtImage" type="text" id="txtImage" class="box"> 
     </td>
   </tr>
  </table>
