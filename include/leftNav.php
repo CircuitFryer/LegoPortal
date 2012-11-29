@@ -1,14 +1,14 @@
 <?php
-/* Heavy editing needed here when lupoli says what all we need to sort by
+/*Heavy editing needed here when lupoli says what all we need to sort by
 
 // get all categories
-$categories = fetchCategories();
+$colors = buildOptions();
 
 // format the categories for display
-$categories = formatCategories($categories, $catId);
+//$categories = formatCategories($categories, $catId);
 ?>
 <ul>
-<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">All Category</a></li>
+<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">All Colors</a></li>
 <?php
 foreach ($categories as $category) {
 	extract($category);

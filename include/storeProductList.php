@@ -3,9 +3,9 @@ require_once './library/commonMethods.php';
 $productsPerRow = 2;
 $productsPerPage = 4;
 
-$sql = "SELECT ItemID, Name, Price, Thumbnail, Quantity
+$sql = "SELECT ItemID, Name, Price, ImageURL, Quantity, ColorID
 		FROM Items
-		ORDER BY Name";
+		ORDER BY ColorID, (Width * Length)";
 $result     = query(getPagingQuery($sql, $productsPerPage));
 $pagingLink = getPagingLink($sql, $productsPerPage, "");
 $numProduct = mysql_num_rows($result);
@@ -22,8 +22,8 @@ if ($numProduct > 0 ) {
 	while ($row = mysql_fetch_assoc($result)) {
 	
 		extract($row);
-		if ($Thumbnail) {
-			$Thumbnail = './images/product/' . $Thumbnail;
+		if ($ImageURL) {
+			$Thumbnail = $ImageURL;
 		} else {
 			$Thumbnail = './images/No-Image-Thumbnail.png';
 		}
@@ -35,7 +35,7 @@ if ($numProduct > 0 ) {
 		// format how we display the price
 		$Price = '$' . $Price;
 		
-		echo "<td width=\"$columnWidth%\" align=\"center\"><a href=\"" . $_SERVER['PHP_SELF'] . "?p=$ItemID" . "\"><img src=\"$Thumbnail\" border=\"0\"><br>$Name</a><br>Price : $Price";
+		echo "<td width=\"$columnWidth%\" align=\"center\"><a href=\"" . $_SERVER['PHP_SELF'] . "?p=$ItemID" . "\"><img src=\"$Thumbnail\" border=\"0\" width=\"75\" height=\"75\"><br>$Name</a><br>Price : $Price";
 
 		// if the product is no longer in stock, tell the customer
 		if ($Quantity <= 0) {
@@ -57,7 +57,7 @@ if ($numProduct > 0 ) {
 	
 } else {
 ?>
-	<tr><td width="100%" align="center" valign="center">No products in this category</td></tr>
+	<tr><td width="100%" align="center" valign="center">No products in this color.</td></tr>
 <?php	
 }	
 ?>

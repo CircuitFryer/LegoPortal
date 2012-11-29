@@ -24,7 +24,7 @@ if (isset($_GET['p']) && (int)$_GET['p'] > 0) {
 <p>&nbsp;</p>
 <p align="center"><img src="./images/LegoPortal2.jpg" alt="LegoPortal"> </p>
 <p>&nbsp;</p>
-<link href="./legoPortal.css" rel="stylesheet" type="text/css">
-<script language="JavaScript" type="text/javascript" src="../library/common.js"></script>
+<link href="./include/legoPortal.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/javascript" src="./library/common.js"></script>
 </head>
 <body>

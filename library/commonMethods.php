@@ -31,17 +31,7 @@ function getPagingQuery($sql, $itemPerPage = 10)
 }
 
 /*
-	Get the links to navigate between one result page to another.
-	Supply a value for $strGet if the page url already contain some
-	GET values for example if the original page url is like this :
-	
-	http://www.phpwebcommerce.com/plaincart/index.php?c=12
-	
-	use "c=12" as the value for $strGet. But if the url is like this :
-	
-	http://www.phpwebcommerce.com/plaincart/index.php
-	
-	then there's no need to set a value for $strGet
+
 	
 	
 */
@@ -148,7 +138,7 @@ function buildOptions()
 	
 	return $list;
 }
-
+/* should be dead code
 function createThumbnail($srcFile, $destFile, $width, $quality = 75)
 {
 	$thumbnail = '';
@@ -213,5 +203,49 @@ function copyImage($srcFile, $destFile, $w, $h, $quality = 75)
     }
     return $destFile;
 
+}
+*/
+
+function checkRequiredPost($requiredField) {
+	$numRequired = count($requiredField);
+	$keys        = array_keys($_POST);
+	
+	$allFieldExist  = true;
+	for ($i = 0; $i < $numRequired && $allFieldExist; $i++) {
+		if (!in_array($requiredField[$i], $keys) || $_POST[$requiredField[$i]] == '') {
+			$allFieldExist = false;
+		}
+	}
+	
+	return $allFieldExist;
+}
+
+function setError($errorMessage)
+{
+	if (!isset($_SESSION['error'])) {
+		$_SESSION['error'] = array();
+	}
+	
+	$_SESSION['error'][] = $errorMessage;
+
+}
+
+/*
+	print the error message
+*/
+function displayError()
+{
+	if (isset($_SESSION['error']) && count($_SESSION['error'])) {
+		$numError = count($_SESSION['error']);
+		
+		echo '<table id="errorMessage" width="550" align="center" cellpadding="20" cellspacing="0"><tr><td>';
+		for ($i = 0; $i < $numError; $i++) {
+			echo '&#8226; ' . $_SESSION['error'][$i] . "<br>\r\n";
+		}
+		echo '</td></tr></table>';
+		
+		// remove all error messages from session
+		$_SESSION['error'] = array();
+	}
 }
 ?>

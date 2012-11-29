@@ -50,46 +50,7 @@ $errorMessage = '&nbsp;';
             <td class="content"><input name="txtShippingPostalCode" type="text" class="box" id="txtShippingPostalCode" size="10" maxlength="10"></td>
         </tr>
     </table>
-    <p>&nbsp;</p>
-    <table width="550" border="0" align="center" cellpadding="5" cellspacing="1" class="entryTable">
-        <tr class="entryTableHeader"> 
-            <td width="150">Payment Information</td>
-            <td><input type="checkbox" name="chkSame" id="chkSame" value="checkbox" onClick="setPaymentInfo(this.checked);"> 
-                <label for="chkSame" style="cursor:pointer">Same as shipping information</label></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">First Name</td>
-            <td class="content"><input name="txtPaymentFirstName" type="text" class="box" id="txtPaymentFirstName" size="30" maxlength="50"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">Last Name</td>
-            <td class="content"><input name="txtPaymentLastName" type="text" class="box" id="txtPaymentLastName" size="30" maxlength="50"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">Address1</td>
-            <td class="content"><input name="txtPaymentAddress1" type="text" class="box" id="txtPaymentAddress1" size="50" maxlength="100"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">Address2</td>
-            <td class="content"><input name="txtPaymentAddress2" type="text" class="box" id="txtPaymentAddress2" size="50" maxlength="100"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">Phone Number</td>
-            <td class="content"><input name="txtPaymentPhone" type="text" class="box" id="txtPaymentPhone" size="30" maxlength="32"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">Province / State</td>
-            <td class="content"><input name="txtPaymentState" type="text" class="box" id="txtPaymentState" size="30" maxlength="32"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">City</td>
-            <td class="content"><input name="txtPaymentCity" type="text" class="box" id="txtPaymentCity" size="30" maxlength="32"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">Postal / Zip Code</td>
-            <td class="content"><input name="txtPaymentPostalCode" type="text" class="box" id="txtPaymentPostalCode" size="10" maxlength="10"></td>
-        </tr>
-    </table>
+    
     <p>&nbsp;</p>
     <table width="550" border="0" align="center" cellpadding="5" cellspacing="1" class="entryTable">
       <tr>

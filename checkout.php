@@ -1,6 +1,6 @@
 <?php
-require_once './include/cartFunctions.php';
-require_once './include/checkoutFunctions.php';
+require_once './library/cartFunctions.php';
+require_once './library/checkoutFunctions.php';
 
 if (isCartEmpty()) {
 	// the shopping cart is still empty
@@ -11,10 +11,10 @@ if (isCartEmpty()) {
 
 	$includeFile = '';
 	if ($step == 1) {
-		$includeFile = './include/shippingAndPaymentInfo.php';
+		$includeFile = 'shippingAndPaymentInfo.php';
 		$pageTitle   = 'Checkout - Step 1 of 2';
 	} else if ($step == 2) {
-		$includeFile = './include/checkoutConfirmation.php';
+		$includeFile = 'checkoutConfirmation.php';
 		$pageTitle   = 'Checkout - Step 2 of 2';
 	} else if ($step == 3) {
 		$orderId     = saveOrder();
@@ -38,7 +38,7 @@ if (isCartEmpty()) {
 	header('Location: storeIndex.php');
 }
 
-require_once 'header.php';
+require_once './include/header.php';
 ?>
 <script language="JavaScript" type="text/javascript" src="./library/checkout.js"></script>
 <?php

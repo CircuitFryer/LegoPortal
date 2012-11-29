@@ -24,13 +24,13 @@ if ($numItem > 0) {
  <tr>
    <td><a href="<?php echo $url; ?>"><?php echo $Name; ?></a></td>
    
-  <td width="30%" align="right"><?php echo displayAmount($Quantity * $Price); ?></td>
+  <td width="30%" align="right"><?php echo "$" . ($Quantity * $Price); ?></td>
  </tr>
 <?php
 	} // end while
 ?>
   <tr><td align="right">Sub-total</td>
-  <td width="30%" align="right"><?php echo displayAmount($subTotal); ?></td>
+  <td width="30%" align="right"><?php echo "$" . $subTotal; ?></td>
  </tr>
   <tr><td colspan="2">&nbsp;</td></tr>
   <tr>

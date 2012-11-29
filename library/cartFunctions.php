@@ -1,6 +1,6 @@
 <?php
 require_once './sessionStarter.php';
-require_once 'commonMethods.php';
+require_once './library/commonMethods.php';
 
 function addToCart()
 {
@@ -8,7 +8,7 @@ function addToCart()
 	if (isset($_GET['p']) && (int)$_GET['p'] > 0) {
 		$productId = (int)$_GET['p'];
 	} else {
-		header('Location: ../storeIndex.php');
+		header('Location: ./storeIndex.php');
 	}
 	
 	// does the product exist ?
@@ -19,7 +19,7 @@ function addToCart()
 	
 	if (mysql_num_rows($result) != 1) {
 		// the product doesn't exist
-		header('Location: ../cart.php');
+		header('Location: ./cart.php');
 	} else {
 		// how many of this product we
 		// have in stock
@@ -30,7 +30,7 @@ function addToCart()
 			// we no longer have this product in stock
 			// show the error message
 			setError('The product you requested is no longer in stock');
-			header('Location: ../cart.php');
+			header('Location: ./cart.php');
 			exit;
 		}
 
@@ -70,17 +70,17 @@ function getCartContent()
 {
 	$cartContent = array();
 
-	$sql = "SELECT ct.ItemID, ct.Quantity, Name, Price, Thumbnail
+	$sql = "SELECT ct.ItemID, ct.Quantity, Name, Price, ImageURL
 			FROM Cart ct, Items i
 			WHERE ct.ItemID = i.ItemID";
 	
 	$result = query($sql);
 	
 	while ($row = mysql_fetch_assoc($result)) {
-		if ($row['Thumbnail']) {
-			$row['Thumbnail'] = '../images/product/' . $row['Thumbnail'];
+		if ($row['ImageURL']) {
+			$row['ImageURL'] = $ImageURL;
 		} else {
-			$row['Thumbnail'] = '../images/No-Image-Thumbnail.png';
+			$row['ImageURL'] = '../images/No-Image-Thumbnail.png';
 		}
 		$cartContent[] = $row;
 	}
@@ -95,11 +95,11 @@ function deleteFromCart()
 {
 
 		
-	$sql  = "DELETE * FROM tbl_cart";
+	//$sql  = "DELETE * FROM tbl_cart";
 
-	$result = query($sql);
+	//$result = query($sql);
 	
-	header('Location: ../cart.php');	
+	header('Location: ./cart.php');	
 }
 
 /*
@@ -159,7 +159,7 @@ function updateCart()
 		// the customer visited before going to shopping cart
 		header("Location: $returnUrl" . $_SESSION['shop_return_url']);
 	} else {
-		header('Location: ../cart.php');	
+		header('Location: ./cart.php');	
 	}
 	
 	exit;

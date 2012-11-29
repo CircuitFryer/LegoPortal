@@ -1,3 +1,5 @@
+/* doubt this is needed after today, since we only need 1 set of info, will leave for now.
+
 function setPaymentInfo(isChecked)
 {
 	with (window.document.frmCheckout) {
@@ -32,7 +34,7 @@ function setPaymentInfo(isChecked)
 	}
 }
 
-
+*/
 function checkShippingAndPaymentInfo()
 {
 	with (window.document.frmCheckout) {
@@ -40,7 +42,7 @@ function checkShippingAndPaymentInfo()
 			return false;
 		} else if (isEmpty(txtShippingLastName, 'Enter last name')) {
 			return false;
-		} else if (isEmpty(txtShippingAddress1, 'Enter shipping address')) {
+		} else if (isEmpty(txtShippingAddress, 'Enter shipping address')) {
 			return false;
 		} else if (isEmpty(txtShippingPhone, 'Enter phone number')) {
 			return false;
@@ -50,21 +52,7 @@ function checkShippingAndPaymentInfo()
 			return false;
 		} else if (isEmpty(txtShippingPostalCode, 'Enter the shipping address postal/zip code')) {
 			return false;
-		} else if (isEmpty(txtPaymentFirstName, 'Enter first name')) {
-			return false;
-		} else if (isEmpty(txtPaymentLastName, 'Enter last name')) {
-			return false;
-		} else if (isEmpty(txtPaymentAddress1, 'Enter Payment address')) {
-			return false;
-		} else if (isEmpty(txtPaymentPhone, 'Enter phone number')) {
-			return false;
-		} else if (isEmpty(txtPaymentState, 'Enter Payment address state')) {
-			return false;
-		} else if (isEmpty(txtPaymentCity, 'Enter Payment address city')) {
-			return false;
-		} else if (isEmpty(txtPaymentPostalCode, 'Enter the Payment address postal/zip code')) {
-			return false;
-		} else {
+		}  else {
 			return true;
 		}
 	}
