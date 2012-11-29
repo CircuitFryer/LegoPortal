@@ -61,6 +61,11 @@ if (isset($_POST['txtUserName'])) {
     </tr>
    </table></td>
  </tr>
+ <tr>
+  <td align="center">
+	  <p><a href="../storeIndex.php">Store Main Page</a></p>
+  </td>
+ </tr>
 </table>
 <p>&nbsp;</p>
 </body>
