@@ -21,17 +21,8 @@ if (isCartEmpty()) {
 		$orderAmount = getOrderAmount($orderId);
 		
 		$_SESSION['orderId'] = $orderId;
-		
-		// our next action depends on the payment method
-		// if the payment method is COD then show the 
-		// success page but when paypal is selected
-		// send the order details to paypal
-		if ($_POST['hidPaymentMethod'] == 'cod') {
-			header('Location: success.php');
-			exit;
-		} else {
-			//$includeFile = 'paypal/payment.php';	
-		}
+		header('Location: success.php');
+		exit;
 	}
 } else {
 	// missing or invalid step number, just redirect

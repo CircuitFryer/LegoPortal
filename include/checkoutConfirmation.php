@@ -1,11 +1,7 @@
 <?php
-/*
-Line 1 : Make sure this file is included instead of requested directly
-Line 2 : Check if step is defined and the value is two
-Line 3 : The POST request must come from this page but the value of step is one
-*/
-if (!defined('WEB_ROOT')
-    || !isset($_GET['step']) || (int)$_GET['step'] != 2
+require_once './library/shippingCalculator.php';
+
+if (!isset($_GET['step']) || (int)$_GET['step'] != 2
 	|| $_SERVER['HTTP_REFERER'] != 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?step=1') {
 	exit;
 }
@@ -15,7 +11,7 @@ $errorMessage = '&nbsp;';
 /*
  Make sure all the required field exist is $_POST and the value is not empty
 */
-$requiredField = array('txtShippingFirstName', 'txtShippingLastName', 'txtShippingAddress1', 'txtShippingPhone', 'txtShippingState',  'txtShippingCity', 'txtShippingPostalCode');
+$requiredField = array('txtShippingFirstName', 'txtShippingLastName', 'txtShippingAddress', 'txtShippingPhone', 'txtShippingState',  'txtShippingCity', 'txtShippingPostalCode');
 					   
 if (!checkRequiredPost($requiredField)) {
 	$errorMessage = 'Input not complete';
@@ -44,9 +40,11 @@ $cartContent = getCartContent();
         <?php
 $numItem  = count($cartContent);
 $subTotal = 0;
+$totalWeight = 0;
 for ($i = 0; $i < $numItem; $i++) {
 	extract($cartContent[$i]);
 	$subTotal += $Price * $Quantity;
+	$totalWeight += $Weight;
 ?>
         <tr class="content"> 
             <td class="content"><?php echo "$Quantity x $Name"; ?></td>
@@ -55,6 +53,13 @@ for ($i = 0; $i < $numItem; $i++) {
         </tr>
         <?php
 }
+$shipData = array(
+	'toZip' => $_POST['txtShippingPostalCode'],
+	'weight' => ($totalWeight / 16)
+);
+$ship = new shippingCalculator($shipData);
+$rate = $ship->calculate();
+
 ?>
         <tr class="content"> 
             <td colspan="2" align="right">Sub-total</td>
@@ -62,11 +67,13 @@ for ($i = 0; $i < $numItem; $i++) {
         </tr>
         <tr class="content"> 
             <td colspan="2" align="right">Shipping</td>
-            <td align="right"><?php //echo displayAmount($shopConfig['shippingCost']); ?></td>
+            <td align="right"><?php echo "$" . $rate; ?>
+	      <input name="hidShippingCost" type="hidden" id="hidShippingCost" value="<?php echo $rate; ?>"></td>
         </tr>
         <tr class="content"> 
             <td colspan="2" align="right">Total</td>
-            <td align="right"><?php //echo displayAmount($shopConfig['shippingCost'] + $subTotal); ?></td>
+            <td align="right"><?php echo "$" . ($rate + $subTotal); ?>
+	      <input name="hidTotalCost" type="hidden" id="hidTotalCost" value="<?php echo ($rate + $subTotal); ?>"></td>
         </tr>
     </table>
     <p>&nbsp;</p>
@@ -86,13 +93,8 @@ for ($i = 0; $i < $numItem; $i++) {
         </tr>
         <tr> 
             <td width="150" class="label">Address1</td>
-            <td class="content"><?php echo $_POST['txtShippingAddress1']; ?>
-                <input name="hidShippingAddress1" type="hidden" id="hidShippingAddress1" value="<?php echo $_POST['txtShippingAddress1']; ?>"></td>
-        </tr>
-        <tr> 
-            <td width="150" class="label">Address2</td>
-            <td class="content"><?php echo $_POST['txtShippingAddress2']; ?>
-                <input name="hidShippingAddress2" type="hidden" id="hidShippingAddress2" value="<?php echo $_POST['txtShippingAddress2']; ?>"></td>
+            <td class="content"><?php echo $_POST['txtShippingAddress']; ?>
+                <input name="hidShippingAddress" type="hidden" id="hidShippingAddress" value="<?php echo $_POST['txtShippingAddress']; ?>"></td>
         </tr>
         <tr> 
             <td width="150" class="label">Phone Number</td>
@@ -100,7 +102,7 @@ for ($i = 0; $i < $numItem; $i++) {
                 <input name="hidShippingPhone" type="hidden" id="hidShippingPhone" value="<?php echo $_POST['txtShippingPhone']; ?>"></td>
         </tr>
         <tr> 
-            <td width="150" class="label">Province / State</td>
+            <td width="150" class="label">State</td>
             <td class="content"><?php echo $_POST['txtShippingState']; ?> <input name="hidShippingState" type="hidden" id="hidShippingState" value="<?php echo $_POST['txtShippingState']; ?>" ></td>
         </tr>
         <tr> 

@@ -6,7 +6,7 @@ function addToCart()
 {
 	// make sure the product id exist
 	if (isset($_GET['p']) && (int)$_GET['p'] > 0) {
-		$productId = (int)$_GET['p'];
+		$productID = (int)$_GET['p'];
 	} else {
 		header('Location: ./storeIndex.php');
 	}
@@ -14,7 +14,7 @@ function addToCart()
 	// does the product exist ?
 	$sql = "SELECT ItemID, Quantity
 	        FROM Items
-			WHERE ItemID = $productId";
+			WHERE ItemID = $productID";
 	$result = query($sql);
 	
 	if (mysql_num_rows($result) != 1) {
@@ -39,19 +39,19 @@ function addToCart()
 
 	$sql = "SELECT ItemID
 	        FROM Cart
-			WHERE ItemID = $productId";
+			WHERE ItemID = $productID";
 	$result = query($sql);
 	
 	if (mysql_num_rows($result) == 0) {
 		// put the product in cart table
 		$sql = "INSERT INTO Cart (ItemID, Quantity)
-				VALUES ($productId, 1)";
+				VALUES ($productID, 1)";
 		$result = query($sql);
 	} else {
 		// update product quantity in cart table
 		$sql = "UPDATE Cart
 		        SET Quantity = Quantity + 1
-				WHERE ItemID = $productId";		
+				WHERE ItemID = $productID";		
 				
 		$result = query($sql);		
 	}	
@@ -70,16 +70,14 @@ function getCartContent()
 {
 	$cartContent = array();
 
-	$sql = "SELECT ct.ItemID, ct.Quantity, Name, Price, ImageURL
+	$sql = "SELECT ct.ItemID, ct.Quantity, Name, Price, ImageURL, i.Weight
 			FROM Cart ct, Items i
 			WHERE ct.ItemID = i.ItemID";
 	
 	$result = query($sql);
 	
 	while ($row = mysql_fetch_assoc($result)) {
-		if ($row['ImageURL']) {
-			$row['ImageURL'] = $ImageURL;
-		} else {
+		if (!$row['ImageURL']) {
 			$row['ImageURL'] = '../images/No-Image-Thumbnail.png';
 		}
 		$cartContent[] = $row;
@@ -93,11 +91,11 @@ function getCartContent()
 */
 function deleteFromCart()
 {
-
+	$productID = (int)$_GET['p'];
 		
-	//$sql  = "DELETE * FROM tbl_cart";
+	$sql  = "DELETE FROM Cart WHERE ItemID = $productID";
 
-	//$result = query($sql);
+	$result = query($sql);
 	
 	header('Location: ./cart.php');	
 }

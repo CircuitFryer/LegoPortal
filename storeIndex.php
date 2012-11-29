@@ -2,6 +2,8 @@
 require_once './sessionStarter.php';
 require_once './library/productFunctions.php';
 require_once './library/cartFunctions.php';
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
 
 $_SESSION['shop_return_url'] = $_SERVER['REQUEST_URI'];
 

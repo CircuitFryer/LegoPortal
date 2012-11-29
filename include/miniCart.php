@@ -17,7 +17,7 @@ if ($numItem > 0) {
 	for ($i = 0; $i < $numItem; $i++) {
 		extract($cartContent[$i]);
 		$Name = "$Quantity x $Name";
-		$url = "storeIndex.php?p=$pd_id";
+		$url = "storeIndex.php?p= $ItemID ";
 		
 		$subTotal += $Price * $Quantity;
 ?>

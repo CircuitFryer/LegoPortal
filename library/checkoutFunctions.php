@@ -4,10 +4,9 @@ require_once './library/commonMethods.php';
 function saveOrder()
 {
 	$orderId       = 0;
-	$shippingCost  = 0;
-	$requiredField = array('hidShippingFirstName', 'hidShippingLastName', 'hidShippingAddress', 'hidShippingCity', 'hidShippingPostalCode');
+	//$requiredField = array('hidShippingFirstName', 'hidShippingLastName', 'hidShippingAddress', 'hidShippingCity', 'hidShippingPostalCode');
 						   
-	if (checkRequiredPost($requiredField)) {
+	//if (checkRequiredPost($requiredField)) {
 	    extract($_POST);
 		
 		// make sure the first character in the 
@@ -20,10 +19,10 @@ function saveOrder()
 		$numItem     = count($cartContent);
 		
 		// save order & get order id
-		$sql = "INSERT INTO Orders(Date, FirstName, LastName, Address, 
-		                              Phone, State, City, DestZip, ShippingCost)
+		$sql = "INSERT INTO Orders(OrderDate, FirstName, LastName, Address, 
+		                              Phone, State, City, DestZip, ShippingCost, TotalCost, Status)
                 VALUES (NOW(), '$hidShippingFirstName', '$hidShippingLastName', '$hidShippingAddress', 
-				        '$hidShippingPhone', '$hidShippingState', '$hidShippingCity', '$hidShippingPostalCode', '$shippingCost')";
+				        '$hidShippingPhone', '$hidShippingState', '$hidShippingCity', '$hidShippingPostalCode', '$hidShippingCost', '$hidTotalCost', 'Waiting')";
 		$result = query($sql);
 		
 		// get the order id
@@ -32,7 +31,7 @@ function saveOrder()
 		if ($orderId) {
 			// save order items
 			for ($i = 0; $i < $numItem; $i++) {
-				$sql = "INSERT INTO OrderItem(OrderID, ItemID, Quantity)
+				$sql = "INSERT INTO OrderItems(OrderID, ItemID, Quantity)
 						VALUES ($orderId, {$cartContent[$i]['ItemID']}, {$cartContent[$i]['Quantity']})";
 				$result = query($sql);					
 			}
@@ -49,11 +48,11 @@ function saveOrder()
 			
 			// then remove the ordered items from cart
 			for ($i = 0; $i < $numItem; $i++) {
-				$sql = "DELETE * FROM Cart";
+				$sql = "DELETE FROM Cart";
 				$result = query($sql);					
 			}							
 		}					
-	}
+	//}
 	
 	return $orderId;
 }
@@ -76,7 +75,7 @@ function getOrderAmount($orderId)
 			WHERE OrderID = $orderId";
 	$result = query($sql);
 
-	if (dbNumRows($result) == 2) {
+	if (mysql_num_rows($result) == 2) {
 		$row = mysql_fetch_row($result);
 		$totalPurchase = $row[0];
 		

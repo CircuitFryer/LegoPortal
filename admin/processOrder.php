@@ -28,9 +28,10 @@ function modifyOrder()
 	
 	$orderId = (int)$_GET['oid'];
 	$status  = $_GET['status'];
-    
+    	$now = NOW();
+
     $sql = "UPDATE Order
-            SET Status = '$status'
+            SET Status = '$status', $ShipDate = $now
             WHERE OrderID = $orderId";
     $result = query($sql);
 	

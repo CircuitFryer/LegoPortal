@@ -14,7 +14,7 @@ if (isset($_GET['p']) && (int)$_GET['p'] > 0) {
 	
 	$result    = query($sql);
 	$row       = mysql_fetch_assoc($result);
-	$pageTitle = $row['ItemID'];
+	$pageTitle = $row['Name'];
 	
 }
 ?>

@@ -52,7 +52,7 @@ for ($i = 0; $i < $numItem; $i++) {
   <input name="hidProductId[]" type="hidden" value="<?php echo $ItemID; ?>">
   </td>
   <td align="right"><?php echo "$" . ($Price * $Quantity); ?></td>
-  <td width="75" align="center"> <input name="btnDelete" type="button" id="btnDelete" value="Delete" onClick="window.location.href='<?php echo $_SERVER['PHP_SELF'] . "?action=delete"; ?>';" class="box"> 
+  <td width="75" align="center"> <input name="btnDelete" type="button" id="btnDelete" value="Delete" onClick="window.location.href='<?php echo $_SERVER['PHP_SELF'] . "?action=delete&p=$ItemID"; ?>';" class="box"> 
   </td>
  </tr>
  <?php
@@ -61,16 +61,6 @@ for ($i = 0; $i < $numItem; $i++) {
  <tr class="content"> 
   <td colspan="4" align="right">Sub-Total</td>
   <td align="right"><?php echo "$" . $subTotal; ?></td>
-  <td width="75" align="center">&nbsp;</td>
- </tr>
-<tr class="content"> 
-   <td colspan="4" align="right">Shipping (not quite)</td>
-  <td align="right">&nbsp;</td>
-  <td width="75" align="center">&nbsp;</td>
- </tr>
-<tr class="content"> 
-   <td colspan="4" align="right">Total </td>
-  <td align="right"><?php //echo "$" . ($subTotal + $shopConfig['shippingCost']); ?></td>
   <td width="75" align="center">&nbsp;</td>
  </tr>  
  <tr class="content"> 
