@@ -18,12 +18,6 @@ switch ($view) {
 		$pageTitle 	= 'Shop Admin Control Panel - Order Detail';
 		break;
 
-	case 'modify' :
-		modifyStatus();
-		//$content 	= 'orderModify.php';		
-		//$pageTitle 	= 'Shop Admin Control Panel - Modify Orders';
-		break;
-
 	default :
 		$content 	= 'orderList.php';		
 		$pageTitle 	= 'Shop Admin Control Panel - View Orders';
