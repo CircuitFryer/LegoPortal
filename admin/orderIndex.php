@@ -17,7 +17,6 @@ switch ($view) {
 		$content 	= 'orderDetail.php';		
 		$pageTitle 	= 'Shop Admin Control Panel - Order Detail';
 		break;
-
 	default :
 		$content 	= 'orderList.php';		
 		$pageTitle 	= 'Shop Admin Control Panel - View Orders';

@@ -20,7 +20,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 
 // get order information
-$sql = "SELECT OrderDate, Status, FirstName, LastName, Address, 
+$sql = "SELECT OrderID, OrderDate, Status, FirstName, LastName, Address, 
                Phone, State, City, DestZip, ShippingCost
 	    FROM Orders
 		WHERE OrderID = $orderId";
@@ -47,7 +47,7 @@ foreach ($orderStatus as $status) {
         </tr>
         <tr> 
             <td width="150" class="label">Order Number</td>
-            <td class="content"><?php echo $OrderId; ?></td>
+            <td class="content"><?php echo $OrderID; ?></td>
         </tr>
         <tr> 
             <td width="150" class="label">Order Date</td>
@@ -56,7 +56,7 @@ foreach ($orderStatus as $status) {
         <tr> 
             <td class="label">Status</td>
             <td class="content"> <select name="cboOrderStatus" id="cboOrderStatus" class="box">
-                    <?php echo $orderOption; ?> </select> <input name="btnModify" type="button" id="btnModify" value="Modify Status" class="box" onClick="modifyOrderStatus(<?php echo $OrderId; ?>);"></td>
+                    <?php echo $orderOption; ?> </select> <input name="btnModify" type="button" id="btnModify" value="Modify Status" class="box" onClick="modifyOrderStatus(<?php echo $OrderID; ?>);"></td>
         </tr>
     </table>
 </form>

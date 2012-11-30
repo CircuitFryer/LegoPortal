@@ -44,7 +44,7 @@ $totalWeight = 0;
 for ($i = 0; $i < $numItem; $i++) {
 	extract($cartContent[$i]);
 	$subTotal += $Price * $Quantity;
-	$totalWeight += $Weight;
+	$totalWeight += $Weight * $Quantity;
 ?>
         <tr class="content"> 
             <td class="content"><?php echo "$Quantity x $Name"; ?></td>

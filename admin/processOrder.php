@@ -28,14 +28,13 @@ function modifyOrder()
 	
 	$orderId = (int)$_GET['oid'];
 	$status  = $_GET['status'];
-    	$now = NOW();
 
-    $sql = "UPDATE Order
-            SET Status = '$status', $ShipDate = $now
+    $sql = "UPDATE Orders
+            SET Status = '$status', ShipDate = NOW()
             WHERE OrderID = $orderId";
     $result = query($sql);
 	
-	header("Location: orderIndex.php?view=list&status=$status");    
+	header("Location: orderIndex.php?view=list");    
 }
 
 ?>

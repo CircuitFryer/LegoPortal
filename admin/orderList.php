@@ -20,7 +20,7 @@ $sql = "SELECT o.OrderID, OrderDate, Status,
 	    FROM Orders o, OrderItems oi, Items i 
 		WHERE oi.ItemID = i.ItemID and o.OrderID = oi.OrderID $sql2
 		GROUP BY OrderID
-		ORDER BY OrderID DESC";
+		ORDER BY OrderID";
 $result     = query(getPagingQuery($sql, $rowsPerPage));
 $pagingLink = getPagingLink($sql, $rowsPerPage, $queryString);
 
@@ -72,7 +72,6 @@ if (mysql_num_rows($result) > 0) {
 ?>
   <tr class="<?php echo $class; ?>"> 
    <td width="60"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?view=detail&oid=<?php echo $OrderID; ?>"><?php echo $OrderID; ?></a></td>
-   <td><?php echo $name ?></td>
    <td width="60" align="right"><?php echo "$" . $Amount; ?></td>
    <td width="150" align="center"><?php echo $OrderDate; ?></td>
    <td width="70" align="center"><?php echo $Status; ?></td>
