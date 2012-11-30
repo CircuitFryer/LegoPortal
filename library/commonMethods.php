@@ -116,7 +116,7 @@ function buildOptions()
 {
 	$sql = "SELECT ColorID, ColorName
 			FROM Colors
-			ORDER BY ColorID";
+			ORDER BY ColorName";
 	$result = query($sql) or die('Cannot get Product. ' . mysql_error());
 	
 	$colors = array();

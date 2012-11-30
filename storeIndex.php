@@ -8,10 +8,12 @@ error_reporting(E_ALL);
 $_SESSION['shop_return_url'] = $_SERVER['REQUEST_URI'];
 
 $pdId   = (isset($_GET['p']) && $_GET['p'] != '') ? $_GET['p'] : 0;
+$colorID   = (isset($_GET['c']) && $_GET['c'] != '') ? $_GET['c'] : 0;
 
 require_once 'include/header.php';
 ?>
 <html>
+
 <body>
 <table width="780" border="1" align="center" cellpadding="0" cellspacing="0">
  <tr> 

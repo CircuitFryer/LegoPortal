@@ -5,6 +5,7 @@ $cartContent = getCartContent();
 
 $numItem = count($cartContent);	
 ?>
+
 <table width="100%" border="1" cellspacing="0" cellpadding="2" id="minicart">
  <?php
 if ($numItem > 0) {

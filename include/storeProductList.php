@@ -3,9 +3,17 @@ require_once './library/commonMethods.php';
 $productsPerRow = 2;
 $productsPerPage = 4;
 
-$sql = "SELECT ItemID, Name, Price, ImageURL, Quantity, ColorID
+if($colorID != 0) {
+	$sql = "SELECT ItemID, Name, Price, ImageURL, Quantity, ColorID
+		FROM Items WHERE ColorID = $colorID
+		ORDER BY ColorID, (Width * Length)";
+}
+else {
+	$sql = "SELECT ItemID, Name, Price, ImageURL, Quantity, ColorID
 		FROM Items
 		ORDER BY ColorID, (Width * Length)";
+}
+
 $result     = query(getPagingQuery($sql, $productsPerPage));
 $pagingLink = getPagingLink($sql, $productsPerPage, "");
 $numProduct = mysql_num_rows($result);
