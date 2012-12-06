@@ -1,8 +1,14 @@
 <?php
+/*
+	File: storeProductList.php, displays all of the items in the store in a list.
+	Author: Stephanie Schneider, Justin Phillips
+*/
 require_once './library/commonMethods.php';
+//Values for how to set up a page in terms of columns and rows of items.
 $productsPerRow = 2;
 $productsPerPage = 4;
 
+//Selection based upon whether sorting by a specific color.
 if($colorID != 0) {
 	$sql = "SELECT ItemID, Name, Price, ImageURL, Quantity, ColorID
 		FROM Items WHERE ColorID = $colorID
@@ -18,8 +24,7 @@ $result     = query(getPagingQuery($sql, $productsPerPage));
 $pagingLink = getPagingLink($sql, $productsPerPage, "");
 $numProduct = mysql_num_rows($result);
 
-// the product images are arranged in a table. to make sure
-// each image gets equal space set the cell width here
+// Make sure all the product spacing is equal with some setups.
 $columnWidth = (int)(100 / $productsPerRow);
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="20">

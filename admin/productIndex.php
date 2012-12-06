@@ -1,5 +1,12 @@
 <?php
+/*
+	File: productIndex.php, the main index of the product catalog for admins, gathers everything
+	into one location.
+	Author: Stephanie Schenider, Justin Phillips
+*/
 require_once '../sessionStarter.php';
+require_once './library/adminFunctions.php';
+checkUser();
 
 $_SESSION['login_return_url'] = $_SERVER['REQUEST_URI'];
 

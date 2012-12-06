@@ -1,5 +1,12 @@
 <?php
+/*
+	File: orderList.php, displays a summary list of all previous orders, including
+	ability to sort by shipping status.
+	Author: Justin Phillips, Stephanie Schneider
+*/
 require_once '../library/commonMethods.php';
+require_once './library/adminFunctions.php';
+checkUser();
 
 if (isset($_GET['status']) && $_GET['status'] != '') {
 	$status = $_GET['status'];
@@ -38,56 +45,56 @@ foreach ($orderStatus as $stat) {
 <p>&nbsp;</p>
 <form action="processOrder.php" method="post"  name="frmOrderList" id="frmOrderList">
  <table width="100%" border="0" cellspacing="0" cellpadding="2" class="text">
- <tr align="center"> 
-  <td align="right">View</td>
-  <td width="75"><select name="cboOrderStatus" class="box" id="cboOrderStatus" onChange="viewOrder();">
-    <option value="" selected>All</option>
-    <?php echo $orderOption; ?>
-  </select></td>
+   <tr align="center"> 
+	 <td align="right">View</td>
+ 	 <td width="75"><select name="cboOrderStatus" class="box" id="cboOrderStatus" onChange="viewOrder();">
+          <option value="" selected>All</option>
+            <?php echo $orderOption; ?>
+          </select></td>
   </tr>
-</table>
+ </table>
 
  <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="text">
-  <tr align="center" id="listTableHeader"> 
-   <td width="60">Order #</td>
-   <td width="60">Amount</td>
-   <td width="150">Order Time</td>
-   <td width="70">Status</td>
-  </tr>
-  <?php
-$parentId = 0;
-if (mysql_num_rows($result) > 0) {
-	$i = 0;
+   <tr align="center" id="listTableHeader"> 
+       <td width="60">Order #</td>
+       <td width="60">Amount</td>
+       <td width="150">Order Time</td>
+       <td width="70">Status</td>
+   </tr>
+<?php
+	$parentId = 0;
+	if (mysql_num_rows($result) > 0) {
+		$i = 0;
 	
-	while($row = mysql_fetch_assoc($result)) {
-		extract($row);
+		while($row = mysql_fetch_assoc($result)) {
+			extract($row);
 		
-		if ($i%2) {
-			$class = 'row1';
-		} else {
-			$class = 'row2';
-		}
+			if ($i%2) {
+				$class = 'row1';
+			} else {
+				$class = 'row2';
+			}
 		
-		$i += 1;
+			$i += 1;
 ?>
   <tr class="<?php echo $class; ?>"> 
-   <td width="60"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?view=detail&oid=<?php echo $OrderID; ?>"><?php echo $OrderID; ?></a></td>
-   <td width="60" align="right"><?php echo "$" . $Amount; ?></td>
-   <td width="150" align="center"><?php echo $OrderDate; ?></td>
-   <td width="70" align="center"><?php echo $Status; ?></td>
+    <td width="60"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?view=detail&oid=<?php echo $OrderID; ?>"><?php echo $OrderID; ?></a></td>
+    <td width="60" align="right"><?php echo "$" . $Amount; ?></td>
+    <td width="150" align="center"><?php echo $OrderDate; ?></td>
+    <td width="70" align="center"><?php echo $Status; ?></td>
   </tr>
-  <?php
-	} // end while
+<?php
+		} // end while
 
 ?>
   <tr> 
-   <td colspan="5" align="center">
-   <?php 
-   echo $pagingLink;
-   ?></td>
+    <td colspan="5" align="center">
+<?php 
+	   echo $pagingLink;
+?></td>
   </tr>
 <?php
-} else {
+	} else {
 ?>
   <tr> 
    <td colspan="5" align="center">No Orders Found </td>

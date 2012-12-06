@@ -1,6 +1,12 @@
 <?php
+/*
+	File: orderIndex.php, the main index of the order handling site for admins, gathers everything
+	into one location.
+	Author: Stephanie Schenider, Justin Phillips
+*/
 require_once '../sessionStarter.php';
 require_once './library/adminFunctions.php';
+checkUser();
 
 $_SESSION['login_return_url'] = $_SERVER['REQUEST_URI'];
 checkUser();

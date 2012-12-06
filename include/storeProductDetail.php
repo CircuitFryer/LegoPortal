@@ -1,6 +1,10 @@
 <?php
+/*
+	File: storeProductDetail.php, displays detailed information on a product in the store to a customer.
+	Author: Stephanie Schneider, Justin Phillips
+*/
 require_once './library/commonMethods.php';
-
+	//Get product information from database.
 	$sql = "SELECT Name, Description, Price, ImageURL, Quantity
 			FROM Items
 			WHERE ItemID = $pdId";
@@ -22,24 +26,27 @@ require_once './library/commonMethods.php';
 ?> 
 <table width="100%" border="0" cellspacing="0" cellpadding="10">
  <tr> 
-  <td align="center"><img src="<?php echo $ImageURL; ?>" border="0" alt="<?php echo $Name; ?>"></td>
-  <td valign="middle">
-<strong><?php echo $Name; ?></strong><br>
-Price : <?php echo $Price; ?><br>
+  	<td align="center"><img src="<?php echo $ImageURL; ?>" border="0" alt="<?php echo $Name; ?>"></td>
+  	<td valign="middle">
+	<strong><?php echo $Name; ?></strong><br>
+	Price : <?php echo $Price; ?><br>
 <?php
 // if we still have this product in stock
 // show the 'Add to cart' button
-if ($Quantity > 0) {
+	if ($Quantity > 0) {
 ?>
-<input type="button" name="btnAddToCart" value="Add To Cart &gt;" onClick="window.location.href='<?php echo $cartURL; ?>';" class="addToCartButton">
+	<input type="button" name="btnAddToCart" value="Add To Cart &gt;" onClick="window.location.href='<?php echo $cartURL; ?>';" class="addToCartButton">
 <?php
-} else {
-	echo 'Out Of Stock';
-}
+	} else {
+		echo 'Out Of Stock';
+	}
 ?>
-  </td>
+  	</td>
  </tr>
  <tr align="left"> 
   <td colspan="2"><?php echo $Description; ?></td>
+ </tr>
+ <tr align="center">
+      <input type="button" name="btnReturn" value="&lt; Return to store" onClick="window.location.href='./storeIndex.php';" class="returnButton">
  </tr>
 </table>

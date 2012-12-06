@@ -1,6 +1,10 @@
 <?php
+/*
+	File: checkoutConfirmation.php, allows a user to double check entered shipping info before finishing checkout.
+	Author: Faisal Mahmood
+*/
 require_once './library/shippingCalculator.php';
-
+//Make sure we should be here right now, redirect otherwise.
 if (!isset($_GET['step']) || (int)$_GET['step'] != 2
 	|| $_SERVER['HTTP_REFERER'] != 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?step=1') {
 	exit;
@@ -8,9 +12,7 @@ if (!isset($_GET['step']) || (int)$_GET['step'] != 2
 
 $errorMessage = '&nbsp;';
 
-/*
- Make sure all the required field exist is $_POST and the value is not empty
-*/
+//ke sure all the required field exist in $_POST and the value is not empty
 $requiredField = array('txtShippingFirstName', 'txtShippingLastName', 'txtShippingAddress', 'txtShippingPhone', 'txtShippingState',  'txtShippingCity', 'txtShippingPostalCode');
 					   
 if (!checkRequiredPost($requiredField)) {
@@ -37,28 +39,28 @@ $cartContent = getCartContent();
             <td>Unit Price</td>
             <td>Total</td>
         </tr>
-        <?php
-$numItem  = count($cartContent);
-$subTotal = 0;
-$totalWeight = 0;
-for ($i = 0; $i < $numItem; $i++) {
-	extract($cartContent[$i]);
-	$subTotal += $Price * $Quantity;
-	$totalWeight += $Weight * $Quantity;
+<?php
+	numItem  = count($cartContent);
+	subTotal = 0;
+	totalWeight = 0;
+	for ($i = 0; $i < $numItem; $i++) {
+		extract($cartContent[$i]);
+		$subTotal += $Price * $Quantity;
+		$totalWeight += ($Weight * $Quantity);
 ?>
         <tr class="content"> 
             <td class="content"><?php echo "$Quantity x $Name"; ?></td>
-            <td align="right"><?php echo "$" . $Price; ?></td>
-            <td align="right"><?php echo "$" . ($Quantity * $Price); ?></td>
+            <td align="right"><?php echo "$" . number_format($Price, 2); ?></td>
+            <td align="right"><?php echo "$" . number_format(($Quantity * $Price), 2); ?></td>
         </tr>
-        <?php
-}
-$shipData = array(
-	'toZip' => $_POST['txtShippingPostalCode'],
-	'weight' => ($totalWeight / 16)
-);
-$ship = new shippingCalculator($shipData);
-$rate = $ship->calculate();
+<?php
+	}
+	$shipData = array(						//Get all shipping data for rate calucltator.
+		'toZip' => $_POST['txtShippingPostalCode'],
+		'weight' => $totalWeight / 16
+	);
+	$ship = new shippingCalculator($shipData);
+	$rate = $ship->calculate();					//Calculate the shipping rate.
 
 ?>
         <tr class="content"> 

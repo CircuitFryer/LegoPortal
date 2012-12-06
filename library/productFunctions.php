@@ -1,6 +1,16 @@
 <?php
+/*
+	File: productFunctions.php, helps with store information gathering on products.
+	Author: Justin Phillips
+*/
 require_once 'commonMethods.php';
 
+/*
+	Gathers detailed product information given a product id.
+	Precondition: None
+	Postcondition: Detailed product information has been returned.
+	Return: Detailed product information for the product corresponding to pdId.
+*/
 function getProductDetail($pdId)
 {
 	

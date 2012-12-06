@@ -1,17 +1,26 @@
 <?php
+/*
+	File: cartFunctions.php, contains functions for handling items inside the store shopping cart.
+	Author: Justin Phillips, Faisal Mahmood
+*/
 require_once './sessionStarter.php';
 require_once './library/commonMethods.php';
 
+/*
+	Add an item to the shopping cart.
+	Precondition: The item is still in stock.
+	Postcondition: The item has been added to the cart.
+*/
 function addToCart()
 {
-	// make sure the product id exist
+	// make sure the product id is in get, redirect otherwise.
 	if (isset($_GET['p']) && (int)$_GET['p'] > 0) {
 		$productID = (int)$_GET['p'];
 	} else {
 		header('Location: ./storeIndex.php');
 	}
 	
-	// does the product exist ?
+	// check if the product is in the database.
 	$sql = "SELECT ItemID, Quantity
 	        FROM Items
 			WHERE ItemID = $productID";
@@ -21,14 +30,12 @@ function addToCart()
 		// the product doesn't exist
 		header('Location: ./cart.php');
 	} else {
-		// how many of this product we
-		// have in stock
+		//Check stock
 		$row = mysql_fetch_assoc($result);
 		$currentStock = $row['Quantity'];
 
 		if ($currentStock == 0) {
-			// we no longer have this product in stock
-			// show the error message
+			// Out of stock item, show error.
 			setError('The product you requested is no longer in stock');
 			header('Location: ./cart.php');
 			exit;
@@ -36,35 +43,34 @@ function addToCart()
 
 	}		
 	
-
+	//Check if items is already in cart, and if so, update quantity.
 	$sql = "SELECT ItemID
 	        FROM Cart
 			WHERE ItemID = $productID";
 	$result = query($sql);
 	
 	if (mysql_num_rows($result) == 0) {
-		// put the product in cart table
+		// put the product in the cart 
 		$sql = "INSERT INTO Cart (ItemID, Quantity)
 				VALUES ($productID, 1)";
 		$result = query($sql);
 	} else {
-		// update product quantity in cart table
+		// update product quantity in the cart
 		$sql = "UPDATE Cart
 		        SET Quantity = Quantity + 1
 				WHERE ItemID = $productID";		
 				
 		$result = query($sql);		
 	}	
-	
-	// an extra job for us here is to remove abandoned carts.
-	// right now the best option is to call this function here
-	
+		
 	header('Location: ' . $_SESSION['shop_return_url']);				
 }
 
 /*
-	Get all item in current session
-	from shopping cart table
+	Generates and returns a list of all items in the cart.
+	Precondition: None
+	Postcondition: An array of all items in the cart has been returned.
+	Return: An array containing all items in the cart.
 */
 function getCartContent()
 {
@@ -87,11 +93,13 @@ function getCartContent()
 }
 
 /*
-	Remove an item from the cart
+	Remove an item from the cart completely.
+	Precondition: None
+	Postcondition: The selected item has been removed from the cart.
 */
 function deleteFromCart()
 {
-	$productID = (int)$_GET['p'];
+	$productID = (int)$_GET['p']; //Get product id to be removed.
 		
 	$sql  = "DELETE FROM Cart WHERE ItemID = $productID";
 
@@ -101,7 +109,9 @@ function deleteFromCart()
 }
 
 /*
-	Update item quantity in shopping cart
+	Update item quantitys in the shopping cart.
+	Precondition: None
+	Postcondition: All cart quantities have been updated.
 */
 function updateCart()
 {
@@ -115,11 +125,11 @@ function updateCart()
 	for ($i = 0; $i < $numItem; $i++) {
 		$newQty = (int)$itemQty[$i];
 		if ($newQty < 1) {
-			// remove this item from shopping cart
+			// Remove items from the cart if new quantity is negative,
 			deleteFromCart($cartId[$i]);	
 			$numDeleted += 1;
 		} else {
-			// check current stock
+			// Check if enough in stock to update.
 			$sql = "SELECT Name, Quantity
 			        FROM Items 
 					WHERE ItemID = {$productId[$i]}";
@@ -130,21 +140,20 @@ function updateCart()
 				// we only have this much in stock
 				$newQty = $row['Quantity'];
 
-				// if the customer put more than
-				// we have in stock, give a notice
+				// If request is more than in stock, update to total quantity and display error.
 				if ($row['Quantity'] > 0) {
 					setError('The quantity you have requested is more than we currently have in stock. The number available is indicated in the &quot;Quantity&quot; box. ');
 				} else {
 					// the product is no longer in stock
 					setError('Sorry, but the product you want (' . $row['Name'] . ') is no longer in stock');
 
-					// remove this item from shopping cart
+					// Remove this item from the shopping cart
 					deleteFromCart($cartId[$i]);	
 					$numDeleted += 1;					
 				}
 			} 
 							
-			// update product quantity
+			// update product quantities in database.
 			$sql = "UPDATE Cart
 					SET Quantity = $newQty";
 				
@@ -153,8 +162,7 @@ function updateCart()
 	}
 	
 	if ($numDeleted == $numItem) {
-		// if all item deleted return to the last page that
-		// the customer visited before going to shopping cart
+		// Return user to last page if entire cart is cleared.
 		header("Location: $returnUrl" . $_SESSION['shop_return_url']);
 	} else {
 		header('Location: ./cart.php');	
@@ -163,6 +171,12 @@ function updateCart()
 	exit;
 }
 
+/*
+	Checks if the shipping cart is empty.
+	Precondition: None
+	Postcondition: A boolean of whether the cart is empty has been returned.
+	Return: A boolean of whether the cart is empty.
+*/
 function isCartEmpty()
 {
 	$isEmpty = false;

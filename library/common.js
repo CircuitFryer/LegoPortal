@@ -1,34 +1,45 @@
 /*
-Strip whitespace from the beginning and end of a string
-Input : a string
+	File: common.js, javascript helper functions common to the whole website.
+	Author: Stephanie Schneider.
+*/
+
+/*
+	Strips whitespace from the beginning and end of a string
+	Precondition: None
+	Postcondition: A version of str has been returned free of unnecessary whitespace.
+	Return: str minus excess whitespace.
 */
 function trim(str)
 {
 	return str.replace(/^\s+|\s+$/g,'');
 }
 
+
 /*
-Make sure that textBox only contain number
+	Makes sure all entry into numeric forms correspond to a number.
+	Precondition: None
+	Postcondition: Data has been forced to be numeric.
 */
 function checkNumber(textBox)
 {
 	while (textBox.value.length > 0 && isNaN(textBox.value)) {
 		textBox.value = textBox.value.substring(0, textBox.value.length - 1)
 	}
-/*	
+	
 	textBox.value = trim(textBox.value);
 	if (textBox.value.length == 0) {
 		textBox.value = 0;		
 	} else {
-		textBox.value = parseInt(textBox.value);
+		textBox.value = parseDouble(textBox.value);
 	}
-*/
+
 }
 
 /*
-	Check if a form element is empty.
-	If it is display an alert box and focus
-	on the element
+	Check if a field is empty, displays an alert if so.
+	Precondtion: None
+	Postcondition: The corresponding notice has been given if necessary.
+	Return: A boolean whether the field is empty.
 */
 function isEmpty(formElement, message) {
 	formElement.value = trim(formElement.value);
@@ -44,7 +55,9 @@ function isEmpty(formElement, message) {
 }
 
 /*
-	Set one value in combo box as the selected value
+	Select a given element in a combobox as the default.
+	Precondition: None
+	Postcondition: The selected value has been established as the default value.
 */
 function setSelect(listElement, listValue)
 {

@@ -1,39 +1,13 @@
-/* doubt this is needed after today, since we only need 1 set of info, will leave for now.
+/*
+	File: checkout.js, helps assist with checkout to ensure entry form completion.
+	Author: Stephanie Schneider.
+*/
 
-function setPaymentInfo(isChecked)
-{
-	with (window.document.frmCheckout) {
-		if (isChecked) {
-			txtPaymentFirstName.value  = txtShippingFirstName.value;
-			txtPaymentLastName.value   = txtShippingLastName.value;
-			txtPaymentAddress1.value   = txtShippingAddress1.value;
-			txtPaymentAddress2.value   = txtShippingAddress2.value;
-			txtPaymentPhone.value      = txtShippingPhone.value;
-			txtPaymentState.value      = txtShippingState.value;			
-			txtPaymentCity.value       = txtShippingCity.value;
-			txtPaymentPostalCode.value = txtShippingPostalCode.value;
-			
-			txtPaymentFirstName.readOnly  = true;
-			txtPaymentLastName.readOnly   = true;
-			txtPaymentAddress1.readOnly   = true;
-			txtPaymentAddress2.readOnly   = true;
-			txtPaymentPhone.readOnly      = true;
-			txtPaymentState.readOnly      = true;			
-			txtPaymentCity.readOnly       = true;
-			txtPaymentPostalCode.readOnly = true;			
-		} else {
-			txtPaymentFirstName.readOnly  = false;
-			txtPaymentLastName.readOnly   = false;
-			txtPaymentAddress1.readOnly   = false;
-			txtPaymentAddress2.readOnly   = false;
-			txtPaymentPhone.readOnly      = false;
-			txtPaymentState.readOnly      = false;			
-			txtPaymentCity.readOnly       = false;
-			txtPaymentPostalCode.readOnly = false;			
-		}
-	}
-}
-
+/*
+	Checks to make sure the entire checkout form is filled out
+	Precondition: None
+	Postcondition: Form filled status has been returned.
+	Return: True if form is complete, false otherwise.
 */
 function checkShippingAndPaymentInfo()
 {

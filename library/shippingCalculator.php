@@ -1,6 +1,10 @@
 <?php
+/*
+	File: shippingCalculator.php, contains the class ShippingCalculator, which contains all data necessary to calculate a shipping rate.
+	Author: Faisal Mahmood
+*/
 class ShippingCalculator  {
-	// Defaults
+	// Defaults for shipping
 	var $weight = 1;
 	var $sizeLength = 4;
 	var $sizeWidth = 8;
@@ -13,19 +17,23 @@ class ShippingCalculator  {
 	var $toZip;
 
 	
-	// Setup Class with Config Options
+	/*
+		Setup Class with Config Options
+		Precondition: None
+		Postcondition: All variables have been set.
+	*/
 	function ShippingCalculator($config) {
 		
 		$this->weight = $config[weight];
-//		$this->sizeLength = $config[sizeLength];
-//		$this->sizeWidth = $config[sizeWidth];
-//		$this->sizeHeight = $config[sizeHeight];
-		$this->toZip = $config[toZip];
-
-		
+		$this->toZip = $config[toZip];		
 	}
 	
-	// Calculate
+	/*
+		Calculates the shipping rate for the package given the variable settings.
+		Precondition: None
+		Postcondition: The shipping rate has been returned.
+		Return: The shipping rate for the package.
+	*/
 	function calculate() {
 		$xml = '
 			<RateV4Request USERID="182APATU3767">
@@ -67,7 +75,12 @@ class ShippingCalculator  {
 	
 	
 
-
+	/*
+		Connects to USPS via url to send and receive shipping data.
+		Precondition: requestURL has already been set up.
+		Postcondition: USPS response has been returned as result.
+		Return: USPS response to shipping-rate request.
+	*/
 	function connectToUSPS($requestURL) {
 		$ch = curl_init();
 

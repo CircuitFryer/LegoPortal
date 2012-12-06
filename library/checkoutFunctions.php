@@ -1,16 +1,22 @@
 <?php
+/*
+	File: checkoutFunctions.php, functions related to assisting in the checkout process.
+	Author: Faisal Mahmood, Justin Phillips
+*/
 require_once './library/commonMethods.php';
 
+/*
+	Saves an order into the database after completion.
+	Precondition: None
+	Postcondition: The order has been saved and cart has been cleared.
 function saveOrder()
 {
-	$orderId       = 0;
-	//$requiredField = array('hidShippingFirstName', 'hidShippingLastName', 'hidShippingAddress', 'hidShippingCity', 'hidShippingPostalCode');
-						   
-	//if (checkRequiredPost($requiredField)) {
+	    $orderId       = 0;
+
 	    extract($_POST);
 		
 		// make sure the first character in the 
-		// customer and city name are properly upper cased
+		// customer and city name are properly capitalized.
 		$hidShippingFirstName = ucwords($hidShippingFirstName);
 		$hidShippingLastName  = ucwords($hidShippingLastName);
 		$hidShippingCity      = ucwords($hidShippingCity);
@@ -52,13 +58,14 @@ function saveOrder()
 				$result = query($sql);					
 			}							
 		}					
-	//}
-	
 	return $orderId;
 }
 
 /*
 	Get order total amount ( total purchase + shipping cost )
+	Precondition: The order has been created previously.
+	Postcondition: The total order cost has been returned.
+	Return: The total cost of the order.
 */
 function getOrderAmount($orderId)
 {

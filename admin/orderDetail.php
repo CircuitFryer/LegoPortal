@@ -1,5 +1,11 @@
 <?php
+/*
+	File: orderDetail.php, displays the specific details of a given order, including shipping options.
+	Author: Justin Phillips, Stephanie Schneider
+*/
 require_once '../library/commonMethods.php';
+require_once './library/adminFunctions.php';
+checkUser();
 if (!isset($_GET['oid']) || (int)$_GET['oid'] <= 0) {
 	header('Location: orderIndex.php');
 }

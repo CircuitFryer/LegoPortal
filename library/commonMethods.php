@@ -1,9 +1,19 @@
 <?php
+/*
+	File: commonMethods.php, methods common to the whole website including database connections.
+	Author: Justin Phillips
+*/
 
-
+//Establish a database connection.
 $dbConn = mysql_connect('studentdb.gl.umbc.edu', 'az33255', 'LegoPortal') or die('MySQL connect failed. '. mysql_error());
 mysql_select_db('az33255') or die('Cannot select database. ' . mysql_error());
 
+/*
+	Executes a sql query and returns the result.
+	Precondition: None
+	Postcondition: The query has been executed.
+	Return: The result of the query.
+*/
 function query($sql)
 {
    $result =  mysql_query($sql) or die(mysql_error());
@@ -11,11 +21,23 @@ function query($sql)
 	return $result;
 }
 
+/*
+	Returns the array corresponding to result of mysql query.
+	Precondition: None
+	Postcondition: The array corresponding to query $result has been returned.
+	Return: The array of data corresponding to $result.
+*/
 function fetchArray($result, $resultType = MYSQL_NUM)
 {
    return mysql_fetch_array($result, $resultType);
 }
 
+/*
+	Appends $sql with how many items to fetch at once for page generation.
+	Precondition: None
+	Postcondition: $sql has been appended for limiting results.
+	Return: An updated $sql.
+*/
 function getPagingQuery($sql, $itemPerPage = 10)
 {
 	if (isset($_GET['page']) && (int)$_GET['page'] > 0) {
@@ -31,9 +53,10 @@ function getPagingQuery($sql, $itemPerPage = 10)
 }
 
 /*
-
-	
-	
+	Generates the paging links to navigate between pages in the store.
+	Precondition: None
+	Postcondition: Paging link has been created and returned.
+	Return: A paging link for navigating.
 */
 function getPagingLink($sql, $itemPerPage = 10, $strGet = '')
 {
@@ -58,8 +81,7 @@ function getPagingLink($sql, $itemPerPage = 10, $strGet = '')
 			$pageNumber = 1;
 		}
 		
-		// print 'previous' link only if we're not
-		// on page one
+		// print 'previous' link if past page 1
 		if ($pageNumber > 1) {
 			$page = $pageNumber - 1;
 			if ($page > 1) {
@@ -70,8 +92,8 @@ function getPagingLink($sql, $itemPerPage = 10, $strGet = '')
 				
 			$first = " <a href=\"$self?$strGet\">[First]</a> ";
 		} else {
-			$prev  = ''; // we're on page one, don't show 'previous' link
-			$first = ''; // nor 'first page' link
+			$prev  = ''; // page one, no backtracking links.
+			$first = ''; 
 		}
 	
 		// print 'next' link only if we're not
@@ -81,8 +103,8 @@ function getPagingLink($sql, $itemPerPage = 10, $strGet = '')
 			$next = " <a href=\"$self?page=$page&$strGet\">[Next]</a> ";
 			$last = " <a href=\"$self?page=$totalPages&$strGet\">[Last]</a> ";
 		} else {
-			$next = ''; // we're on the last page, don't show 'next' link
-			$last = ''; // nor 'last page' link
+			$next = ''; // last page, no forward links.
+			$last = '';
 		}
 
 		$start = $pageNumber - ($pageNumber % $numLinks) + 1;
@@ -112,11 +134,16 @@ function getPagingLink($sql, $itemPerPage = 10, $strGet = '')
 	
 	return $pagingLink;
 }
+
+/*
+	Generates a combobox containing all colors in the database.
+	Precondition: None
+	Postcondition: A combobox of all colors in the database has been returned.
+	Return: A combobox containing all colors in the database.	
+*/
 function buildOptions()
-{
-	$sql = "SELECT ColorID, ColorName
-			FROM Colors
-			ORDER BY ColorName";
+{	//Gather color data
+	$sql = "SELECT ColorID, ColorName FROM Colors ORDER BY ColorName";
 	$result = query($sql) or die('Cannot get Product. ' . mysql_error());
 	
 	$colors = array();
@@ -138,74 +165,13 @@ function buildOptions()
 	
 	return $list;
 }
-/* should be dead code
-function createThumbnail($srcFile, $destFile, $width, $quality = 75)
-{
-	$thumbnail = '';
-	
-	if (file_exists($srcFile)  && isset($destFile))
-	{
-		$size        = getimagesize($srcFile);
-		$w           = number_format($width, 0, ',', '');
-		$h           = number_format(($size[1] / $size[0]) * $width, 0, ',', '');
-		
-		$thumbnail =  copyImage($srcFile, $destFile, $w, $h, $quality);
-	}
-	
-	// return the thumbnail file name on sucess or blank on fail
-	return basename($thumbnail);
-}
 
-function copyImage($srcFile, $destFile, $w, $h, $quality = 75)
-{
-    $tmpSrc     = pathinfo(strtolower($srcFile));
-    $tmpDest    = pathinfo(strtolower($destFile));
-    $size       = getimagesize($srcFile);
-
-    if ($tmpDest['extension'] == "gif" || $tmpDest['extension'] == "jpg")
-    {
-       $destFile  = substr_replace($destFile, 'jpg', -3);
-       $dest      = imagecreatetruecolor($w, $h);
-       imageantialias($dest, TRUE);
-    } elseif ($tmpDest['extension'] == "png") {
-       $dest = imagecreatetruecolor($w, $h);
-       imageantialias($dest, TRUE);
-    } else {
-      return false;
-    }
-
-    switch($size[2])
-    {
-       case 1:       //GIF
-           $src = imagecreatefromgif($srcFile);
-           break;
-       case 2:       //JPEG Not in our version, but will work on newer php systems.
-          // $src = imagecreatefromjpeg($srcFile);
-         //  break;
-       case 3:       //PNG
-           $src = imagecreatefrompng($srcFile);
-           break;
-       default:
-           return false;
-           break;
-    }
-
-    imagecopyresampled($dest, $src, 0, 0, 0, 0, $w, $h, $size[0], $size[1]);
-
-    switch($size[2])
-    {
-       case 1:
-       case 2:
-           imagejpeg($dest,$destFile, $quality);
-           break;
-       case 3:
-           imagepng($dest,$destFile);
-    }
-    return $destFile;
-
-}
+/*
+	Checks if required fields have been stored in post.
+	Precondition: None
+	Postcondition: A boolean of whether all required fields are present has been returned.
+	Return: A boolean of whether all required fields are in post.
 */
-
 function checkRequiredPost($requiredField) {
 	$numRequired = count($requiredField);
 	$keys        = array_keys($_POST);
@@ -220,6 +186,11 @@ function checkRequiredPost($requiredField) {
 	return $allFieldExist;
 }
 
+/*
+	Sets the session error message to $errorMessage.
+	Precondition: None
+	Postcondition: The session error message has been set to $errorMessage.
+*/
 function setError($errorMessage)
 {
 	if (!isset($_SESSION['error'])) {
@@ -231,7 +202,9 @@ function setError($errorMessage)
 }
 
 /*
-	print the error message
+	Display the current session error messages.
+	Precondition: None
+	Postcondition: All current session error messages have been displayed.
 */
 function displayError()
 {

@@ -1,5 +1,12 @@
-// JavaScript Document
-
+/*
+	File: order.js; contains functions to help assist in order processing for admin users.
+	Author: Stephanie Schneider
+*/
+/*
+	Redirects a user to view detailed information on a selected order.
+	Precondition: None
+	Postcondition: User has been redirected to the appropriate order page, returned to orderIndex itself otherwise.
+*/
 function viewOrder()
 {
 	statusList = window.document.frmOrderList.cboOrderStatus;
@@ -12,6 +19,11 @@ function viewOrder()
 	}
 }
 
+/*
+	Redirects the browser to update an orders' shipping status based upon selected value.
+	Precondition: None
+	Postcondition: Order status has been updated.
+*/
 function modifyOrderStatus(orderId)
 {
 	statusList = window.document.frmOrder.cboOrderStatus;

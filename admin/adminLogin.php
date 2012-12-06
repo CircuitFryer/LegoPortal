@@ -1,13 +1,17 @@
 <?php	
+/*	File: adminLogin.php is the login page for the administrative side of the website.
+	Author: Justin Phillips, Stephanie Schenider
+*/
+
 require_once '../sessionStarter.php';
 require_once './library/adminFunctions.php';
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+
 
 
 
 $errorMessage = '';
 
+//Login the user.
 if (isset($_POST['txtUserName'])) {
 	$result = login();
 	

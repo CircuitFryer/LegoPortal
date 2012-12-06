@@ -1,5 +1,8 @@
 <?php
-
+/*
+	File: error.php, display an error message as a last resort if something major goes wrong.
+	Author: Justin Phillips
+*/
 $pageTitle   = 'Checkout Error';
 require_once './include/header.php';
 ?>
